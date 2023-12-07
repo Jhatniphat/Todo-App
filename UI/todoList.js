@@ -1,44 +1,53 @@
-function todoUserInterface() {
-  // const todosDiv = document.getElementById('todos')
+import { todoManagement } from './../lib/todoManagement.js'
+const {
+  addTodo,
+  removeTodo,
+  findTodo,
+  getTodos,
+  getNumberOfDone,
+  getNumberOfNotDone,
+  clearTodo,
+  setDone,
+  setItemToDone
+} = todoManagement()
 
-  function showTodoItem(newId, newDescription) {
-    const listTodoDiv = document.getElementById('listTodo')
-    console.log(listTodoDiv.children.length)
-    //create new <div>
-    const newTodoDiv = document.createElement('div')
-    newTodoDiv.className = 'todoItem'
-    newTodoDiv.setAttribute('id', newId)
+function showTodoItem(newId , newDescription){
+  let listTodoDiv = document.querySelector('#listTodo')
+  //create new <div>
+  const newTodoDiv = document.createElement('div')
+  newTodoDiv.className = 'todoItem'
+  newTodoDiv.setAttribute('id' , newId)
 
-    //create new <p>
-    const newTodoItem = document.createElement('p')
-    newTodoItem.textContent = newDescription
-    newTodoDiv.appendChild(newTodoItem)
+  //create <p>
+  const newTodoItem = document.createElement('p')
+  newTodoItem.textContent = newDescription
+  newTodoDiv.appendChild(newTodoItem)
 
-    //create done button
-    const doneButton = document.createElement('button')
-    doneButton.textContent = 'Not Done'
-    newTodoDiv.appendChild(doneButton)
+  //create <Button> Done
+  const newDoneButton = document.createElement('button')
+  newDoneButton.textContent = 'Not Done'
+  newTodoDiv.appendChild(newDoneButton)
 
-    //create remove button
-    const removeButton = document.createElement('button')
-    removeButton.textContent = 'remove'
-    newTodoDiv.appendChild(removeButton)
+  //create <Button> Remove
+  const newRemoveButton = document.createElement('button')
+  newRemoveButton.textContent = 'Remove'
+  newTodoDiv.appendChild(newRemoveButton)
 
-    listTodoDiv.appendChild(newTodoDiv)
-  }
-  function showNumberOfDone(numberOfDone) {
-    const doneP = document.getElementById('done')
-    doneP.textContent = `Number of Done:${numberOfDone}`
-  }
-  function showNumberOfNotDone(numberOfNotDone) {
-    const notDoneP = document.getElementById('notDone')
-    notDoneP.textContent = `Number of Not Done:${numberOfNotDone}`
-  }
-  function removeTodoItem(removeId) {
-    const removeTodoNode = document.getElementById(removeId)
-    removeTodoNode.parentElement.removeChild(removeTodoNode)
-  }
-  return { showTodoItem, showNumberOfDone, showNumberOfNotDone, removeTodoItem }
+  listTodoDiv.appendChild(newTodoDiv)
 }
-// export { todoUserInterface }
-module.exports = todoUserInterface
+
+function showNumberOfDone(numberOfDone){
+  const doneP = document.querySelector('#done')
+  doneP.textContent = `Number Of Done : ${numberOfDone}`
+}
+
+function showNumberOfNotDone(numberOfNotDone){
+  const NotdoneP = document.querySelector('#notDone')
+  NotdoneP.textContent = `Number Of Not Done : ${numberOfNotDone}`
+}
+
+function removeTodoItem(removeId){
+  let removedDiv = document.getElementById(removeId)
+  removedDiv.remove()
+}
+export {showTodoItem , showNumberOfDone , showNumberOfNotDone , removeTodoItem}
