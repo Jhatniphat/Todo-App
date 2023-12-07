@@ -1,5 +1,22 @@
-// import { todoManagement } from '../lib/todoManagement.js'
-// import { todoUserInterface } from '../UI/todoList.js'
+import { todoManagement } from '../lib/todoManagement.js'
+import { showTodoItem, showNumberOfDone, showNumberOfNotDone, removeTodoItem } from '../UI/todoList.js'
+// const { showTodoItem, showNumberOfDone, showNumberOfNotDone, removeTodoItem } =
+//   todoUserInterface()
+const {
+  addTodo,
+  removeTodo,
+  findTodo,
+  getTodos,
+  getNumberOfDone,
+  getNumberOfNotDone,
+  setItemToDone,
+  loadTodos,
+  clearTodo
+} = todoManagement()
+
+// const todoManagement = require('../lib/todoManagement.js')
+// const todoUserInterface = require('../UI/todoList.js')
+
 // const { showTodoItem, showNumberOfDone, showNumberOfNotDone, removeTodoItem } =
 //   todoUserInterface()
 // const {
@@ -14,23 +31,6 @@
 //   clearTodo
 // } = todoManagement()
 
-const todoManagement = require('../lib/todoManagement.js')
-const todoUserInterface = require('../UI/todoList.js')
-
-const { showTodoItem, showNumberOfDone, showNumberOfNotDone, removeTodoItem } =
-  todoUserInterface()
-const {
-  addTodo,
-  removeTodo,
-  findTodo,
-  getTodos,
-  getNumberOfDone,
-  getNumberOfNotDone,
-  setItemToDone,
-  loadTodos,
-  clearTodo
-} = todoManagement()
-
 const addTodoHandler = () => {
   const todoItem = document.querySelector('input').value
   if (todoItem.trim().length !== 0) {
@@ -41,6 +41,7 @@ const addTodoHandler = () => {
     showNumberOfNotDone(getNumberOfNotDone())
   }
 }
+
 const addButtonHandler = (todoId) => {
   document
     .getElementById(todoId)
@@ -79,50 +80,17 @@ const beforeUnloadHandler = (event) => {
   clearTodo()
 }
 
-const loadHandler = () => {
-  const localTodos = localStorage.getItem('todos')
-  const yourTodos = JSON.parse(localTodos)
-
-  if (
-    yourTodos !== null &&
-    yourTodos !== undefined &&
-    yourTodos?.length !== 0
-  ) {
-    //[{"id":1,"description":"Shopping","done":true},{"id":2,"description":"Watch Movie","done":false},{"id":3,"description":"sleep","done":true}]
-
-    loadTodos(yourTodos)
-    getTodos().forEach((todo) => {
-      showTodoItem(todo.id, todo.description)
-      addButtonHandler(todo.id)
-      if (todo.done) {
-        const doneButtonFire = document.getElementById(todo.id).children[1]
-        setdoneStyle(doneButtonFire)
-      }
-    })
-    showNumberOfDone(getNumberOfDone())
-    showNumberOfNotDone(getNumberOfNotDone())
-  }
-  const addButton = document.getElementById('addBtn')
-  addButton.addEventListener('click', () => addTodoHandler())
-
-  const inputTodo = document.querySelector('input')
-  inputTodo.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') addTodoHandler()
-  })
+export {
+  addTodoHandler,
+  notDoneButtonHandler,
+  removeButtonHandler,
+  beforeUnloadHandler
 }
 
-// export {
+// module.exports = {
 //   addTodoHandler,
 //   notDoneButtonHandler,
 //   removeButtonHandler,
 //   beforeUnloadHandler,
 //   loadHandler
 // }
-
-module.exports = {
-  addTodoHandler,
-  notDoneButtonHandler,
-  removeButtonHandler,
-  beforeUnloadHandler,
-  loadHandler
-}
